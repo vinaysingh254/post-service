@@ -2,21 +2,21 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: post-service
-  name: post-service
+    app: vstech-app
+  name: vstech-app
 spec:
   replicas: 4
   selector:
     matchLabels:
-      app: post-service
+      app: vstech-app
   template:
     metadata:
       labels:
-        app: post-service
+        app: vstech-app
     spec:
       containers:
-        - name: my-post-service
-          image: 211223789150.dkr.ecr.us-east-1.amazonaws.com/my-post-service:latest
+        - name: my-vstech-app
+          image: 405947448634.dkr.ecr.us-east-1.amazonaws.com/vstech-app:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8085
@@ -28,9 +28,9 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: post-service
-    k8s-app: post-service
-  name: post-service
+    app: vstech-app
+    k8s-app: vstech-app
+  name: vstech-app
 spec:
   ports:
     - name: http
@@ -39,4 +39,4 @@ spec:
       targetPort: 8085
   type: LoadBalancer
   selector:
-    app: post-service
+    app: vstech-app
