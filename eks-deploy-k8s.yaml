@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: post-service
+  name: post-service
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: post-service
+  template:
+    metadata:
+      labels:
+        app: post-service
+    spec:
+      containers:
+        - name: my-post-service
+          image: 211223789150.dkr.ecr.us-east-1.amazonaws.com/my-post-service:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8085
+              name: http
+              protocol: TCP
+# service type load-balancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: post-service
+    k8s-app: post-service
+  name: post-service
+spec:
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 8085
+  type: LoadBalancer
+  selector:
+    app: post-service
