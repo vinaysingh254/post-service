@@ -4,7 +4,6 @@ spring:
   application:
     name: post-service
 logging:
-  file.name: logs/application-debug.log
   pattern:
     console: "%d %-5level %logger : %msg%n"
     file: "%d %-5level [%thread] %logger : %msg%n"
