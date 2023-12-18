@@ -2,6 +2,8 @@ package com.vstech.gateway.postservice.controller;
 
 import com.vstech.gateway.postservice.model.Post;
 import com.vstech.gateway.postservice.service.PostService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,16 +20,23 @@ import java.util.List;
 @RequestMapping("/post")
 public class PostController {
 
+    public static final Logger LOGGER = LoggerFactory.getLogger(PostController.class);
     @Autowired
     PostService postService;
 
     @GetMapping("/{id}")
     public ResponseEntity<Post> getPostById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(postService.getPostById(id));
+        LOGGER.debug("Inside getPostById(). id = {}", id);
+        Post postById = postService.getPostById(id);
+        LOGGER.debug("Response : {}", postById);
+        return ResponseEntity.ok(postById);
     }
 
     @GetMapping
     public ResponseEntity<List<Post>> getPosts() {
-        return ResponseEntity.ok(postService.getAllPost());
+        LOGGER.debug("Inside getPosts()....");
+        List<Post> allPost = postService.getAllPost();
+        LOGGER.debug("Response : {}", allPost);
+        return ResponseEntity.ok(allPost);
     }
 }
